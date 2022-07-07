@@ -1,0 +1,65 @@
+@import '../../assets/variables.scss';
+
+.user-page {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+
+  .user {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .username {
+      font-size: 8rem;
+      text-transform: uppercase;
+    }
+
+    .to-change {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .change-password {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+    }
+
+    .settings {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+    }
+
+    .btn-username {
+      background-color: $green-color;
+    }
+
+    .btn-password {
+      background-color: $tangerine-color;
+    }
+
+    .button {
+      height: 3rem;
+      width: 12rem;
+      border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      margin: 2rem auto;
+      filter: saturate(200%);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

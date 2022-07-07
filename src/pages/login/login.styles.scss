@@ -1,0 +1,64 @@
+@import '../../assets/variables.scss';
+
+.login {
+  height: 100vh;
+  width: 100vw;
+  background-color: $yellow-color;
+
+  .form-container {
+    width: 50%;
+    height: 50%;
+    margin: 12rem auto;
+    padding: 1rem;
+    border: 1px solid grey;
+    border-radius: 12px;
+    background-color: $aqua-color;
+
+    .form {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .inputs,
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+      }
+
+      .form-button {
+        height: 4rem;
+        text-transform: uppercase;
+        border-radius: 12px;
+      }
+
+      .form-input {
+        text-transform: uppercase;
+        height: 3rem;
+      }
+
+      .form-label {
+        display: flex;
+        margin-left: 2rem;
+
+        span {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+.green {
+  background-color: $green-color;
+}
+
+.blue {
+  background-color: $blue-alternate-color;
+}
+
+.red {
+  background-color: $red-color;
+}

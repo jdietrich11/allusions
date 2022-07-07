@@ -1,0 +1,37 @@
+:root {
+  $primary-color: #5bdce1;
+}
+
+$primary-color: #5bdce1;
+$tangerine-color: #f4975b;
+$pink-color: #e73ba5;
+$green-color: #57dea0;
+$red-color: #ff5f7c;
+$yellow-color: #ffde8b;
+
+// alternative colors
+$aqua-color: #71e7e0;
+$pink-alternate-color: #ff8bda;
+$blue-alternate-color: #43a9dd;
+$red-alternate-color: #f12e90;
+
+$primary-font-family: 'Source Serif Pro';
+$secondary-font-family: 'Rubik';
+$tertiary-font-family: 'Mukta';
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: $secondary-font-family, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+}

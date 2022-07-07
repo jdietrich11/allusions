@@ -1,0 +1,74 @@
+@import '../../assets/variables.scss';
+
+.choose-teams {
+  height: 100vh;
+  width: 100vw;
+  background-color: $yellow-color;
+
+  .teams {
+    height: 33%;
+    width: 70%;
+    display: flex;
+    margin: auto;
+    margin-top: 20%;
+    border: 1px solid black;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    background-image: linear-gradient(
+      to right,
+      $primary-color 49%,
+      black,
+      $tangerine-color 51%
+    );
+    filter: saturate(200%);
+
+    .team {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+
+      .player {
+        font-size: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        .x {
+          background-color: rgb(255, 255, 255, 0.5);
+          border: 1px solid black;
+          padding: 0.25rem;
+          margin-bottom: 0.4rem;
+          font-size: 0.75rem;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .team1,
+    .team2 {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+  }
+
+  .confirm-teams {
+    text-align: center;
+    text-decoration: none;
+    padding: 1rem;
+    border: 1px solid black;
+    width: 12rem;
+    margin: auto;
+    background-color: $blue-alternate-color;
+    filter: saturate(200%);
+
+    &-link {
+      text-decoration: none;
+      color: black;
+    }
+  }
+}

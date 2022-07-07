@@ -1,0 +1,35 @@
+@import '../../assets/variables.scss';
+
+.player-select {
+  height: 100vh;
+  width: 100vw;
+
+  .player {
+    font-size: 12rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 25%;
+    margin-bottom: 2rem;
+  }
+
+  .ready-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .ready {
+      display: flex;
+      font-size: 8rem;
+      width: 8.5rem;
+      height: 8.5rem;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      border: 2px solid black;
+      border-radius: 50%;
+      color: $pink-color;
+      background-color: $primary-color;
+      filter: saturate(200%);
+    }
+  }
+}

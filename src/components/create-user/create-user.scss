@@ -1,0 +1,42 @@
+@import '../../assets/variables.scss';
+
+.create-user-heading {
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin: auto;
+}
+
+.form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .inputs,
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+
+  .form-button {
+    height: 4rem;
+    text-transform: uppercase;
+    border-radius: 12px;
+  }
+
+  .form-input {
+    text-transform: uppercase;
+    height: 3rem;
+  }
+
+  .form-label {
+    display: flex;
+    margin-left: 2rem;
+
+    span {
+      margin-left: 0.5rem;
+    }
+  }
+}

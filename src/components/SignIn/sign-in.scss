@@ -1,0 +1,28 @@
+@import '../../assets/variables.scss';
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+
+  .sign-in-heading {
+    font-size: 4rem;
+    text-transform: uppercase;
+  }
+
+  .input {
+    width: 100%;
+    height: 4rem;
+    margin-top: 1rem;
+  }
+
+  .form-button {
+    height: 4rem;
+    text-transform: uppercase;
+    border-radius: 12px;
+    font-size: 2rem;
+    margin-top: 4rem;
+  }
+}

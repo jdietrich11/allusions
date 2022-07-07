@@ -1,0 +1,28 @@
+$primary-color: #5bdce1;
+$tangerine-color: #f4975b;
+$pink-color: #e73ba5;
+$green-color: #57dea0;
+$red-color: #ff5f7c;
+$yellow-color: #ffde8b;
+
+// alternative colors
+$aqua-color: #71e7e0;
+$pink-alternate-color: #ff8bda;
+$blue-alternate-color: #43a9dd;
+$red-alternate-color: #f12e90;
+
+$primary-font-family: 'Source Serif Pro';
+$secondary-font-family: 'Rubik';
+$tertiary-font-family: 'Mukta';
+
+.green {
+  background-color: $green-color;
+}
+
+.blue {
+  background-color: $blue-alternate-color;
+}
+
+.red {
+  background-color: $red-color;
+}
