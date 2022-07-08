@@ -12,8 +12,6 @@ const defaultFormFields = {
   password: '',
 };
 
-// new test
-
 const SignInForm: React.FC = (props) => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
