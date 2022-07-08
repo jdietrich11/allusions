@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
+import axios from 'axios';
 
 const CardpackSelect: React.FC = () => {
-  const [selected, setIsSelected] = useState(true);
+  const [ownedCardpacks, setOwnedCardpacks] = useState([]);
 
+  useEffect(() => {
+    axios({
+      url: 'https://allusiondb.hasura.app/v1/graphql',
+      method: 'post',
+      headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
+      data: {
+        query: 'query MyQuery {cardpack_list { cardpack_name }}'
+      }
+    }).then(res => {
+      setOwnedCardpacks(res.data.data.cardpack_list); 
+      console.log(ownedCardpacks)
+    })
+  }, [])
+  
   return (
     <div className='cardpack-select'>
       <Header />
@@ -33,23 +48,17 @@ const CardpackSelect: React.FC = () => {
           </form>
         </div>
         <div className='cardpacks'>
-          <div className='cardpack' onClick={() => setIsSelected(!selected)}>
-            <div className={selected ? 'selected green' : 'selected'}>
-              {selected ? <span>&#10003;</span> : ''}
-            </div>
-            <div className='cardpack-name'>Starter</div>
-            <div className='card-count'>(60 cards)</div>
-          </div>
+
         </div>
       </div>
       <div className='buttons'>
         <div className='button game-length'>
           <label>
             How long do you want to play for?
-            <select>
+            <select defaultValue={'normal'}>
               <option value='quick'>quick (30 cards: 30 minutes)</option>
               <option value='short'>short (40 cards: 45 minutes)</option>
-              <option selected value='short'>
+              <option value='normal'>
                 normal (50 cards: 60 minutes)
               </option>
               <option value='short'>long (60 cards: 75 minutes)</option>
@@ -65,3 +74,29 @@ const CardpackSelect: React.FC = () => {
 };
 
 export default CardpackSelect;
+
+/**
+  url: 'https://allusiondb.hasura.app/v1/graphql',
+  method: 'post',
+  headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
+  data: {
+    query: 'query MyQuery {cardpack_list { cardpack_name }}'
+
+                ownedCardpacks.map(cardpack => (
+              <div key={cardpack} className='cardpack'>
+                <div className='selected green'><span>&#10003;</span></div>
+                <div className="cardpack-name">{cardpack}</div>
+              </div>
+            ))
+            // ownedCardpacks.map((cardPack: ['']) => (
+              // <div key={Math.random()}>
+              //   <div className='cardpack' onClick={() => setIsSelected(!selected)}>
+              //     <div className={selected ? 'selected green' : 'selected'}>
+              //       {selected ? <span>&#10003;</span>: ''}
+              //     </div>
+              //     <div className="cardpack-name">{cardPack}</div>
+              //   </div>
+              // </div>
+            // ))
+  }
+ */

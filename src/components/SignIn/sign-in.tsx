@@ -20,7 +20,7 @@ const SignInForm: React.FC = (props) => {
   const { currentUser }: any = props;
 
   useEffect(() => {
-    if (!currentUser) {
+    if (currentUser !== null) {
       return;
     } else {
       navigate('/choose-teams');
