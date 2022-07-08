@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import { signInAuthUserWithEmailAndPassword } from '../../utils/firestore/firestore';
 import { setCurrentUser } from '../../utils/store/user/user.action';
-import { selectCurrentUser } from '../../utils/store/user/user.selector';
 
 import './sign-in.scss';
 
@@ -13,14 +12,15 @@ const defaultFormFields = {
   password: '',
 };
 
-const SignInForm: React.FC = () => {
+const SignInForm: React.FC = (props) => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   const navigate = useNavigate();
+  const { currentUser }: any = props;
 
   useEffect(() => {
-    if (!selectCurrentUser) {
+    if (!currentUser) {
       return;
     } else {
       navigate('/choose-teams');
@@ -99,4 +99,10 @@ const SignInForm: React.FC = () => {
   );
 };
 
-export default SignInForm;
+const mapStateToProps = (state: any) => {
+  return {
+    currentUser: state.currentUser,
+  };
+};
+
+export default connect(mapStateToProps)(SignInForm);
