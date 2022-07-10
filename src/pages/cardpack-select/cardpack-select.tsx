@@ -5,21 +5,30 @@ import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
 import axios from 'axios';
 
+interface MyCardpackType {
+  id: number;
+  cardpack_name: string;
+}
+
 const CardpackSelect: React.FC = () => {
-  const [ownedCardpacks, setOwnedCardpacks] = useState([]);
+  const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
 
   useEffect(() => {
-    axios({
-      url: 'https://allusiondb.hasura.app/v1/graphql',
-      method: 'post',
-      headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
-      data: {
-        query: 'query MyQuery {cardpack_list { cardpack_name }}'
-      }
-    }).then(res => {
-      setOwnedCardpacks(res.data.data.cardpack_list); 
-      console.log(ownedCardpacks)
-    })
+    const getPacks = async () => {
+      let res : any = await axios({
+        url: 'https://allusiondb.hasura.app/v1/graphql',
+        method: 'post',
+        headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
+        data: {
+          query: 'query MyQuery {cardpack_list { cardpack_name }}'
+        }
+      })
+
+      await setOwnedCardpacks(res.data.data.cardpack_list);
+      console.log(res.data.data.cardpack_list);
+    }
+
+    getPacks();
   }, [])
   
   return (
@@ -48,7 +57,14 @@ const CardpackSelect: React.FC = () => {
           </form>
         </div>
         <div className='cardpacks'>
-
+          {
+            ownedCardpacks.map(cardpack => (
+              <div key={cardpack.id} className="cardpack">
+                <div className="selected green">&#10003;</div>
+                <div className="cardpack_name">{cardpack.cardpack_name}</div>
+              </div>
+            ))
+          }
         </div>
       </div>
       <div className='buttons'>
