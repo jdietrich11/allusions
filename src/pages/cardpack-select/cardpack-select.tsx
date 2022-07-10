@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, connect } from 'react-redux';
 
 import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
 import axios from 'axios';
+import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
 
 interface MyCardpackType {
   id: number;
   cardpack_name: string;
 }
 
-const CardpackSelect: React.FC = () => {
+const CardpackSelect: React.FC = (props) => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
-  const [selectedCardpacks, setSelectedCardpacks] = useState<number[]>([]);
+  const {selectedCardpacks} : any = props;
+  const dispatch = useDispatch();
+  console.log(props);
 
   useEffect(() => {
     const getPacks = async (data: string) => {
@@ -35,9 +39,9 @@ const CardpackSelect: React.FC = () => {
 
   const handleSelectionClick = (id: any) => {
     if (!selectedCardpacks.includes(id)) {
-      setSelectedCardpacks([...selectedCardpacks, id]);
+      dispatch(addCardpack(id));
     } else {
-      setSelectedCardpacks(selectedCardpacks.filter(data => data !== id))
+      dispatch(removeCardpack(id));
     }
   }
   
@@ -99,4 +103,11 @@ const CardpackSelect: React.FC = () => {
   );
 };
 
-export default CardpackSelect;
+const mapStateToProps = (state: any) => {
+  return {
+    selectedCardpacks: state.selectedCardpacks.selectedCardpacks
+  };
+};
+
+
+export default connect(mapStateToProps)(CardpackSelect);

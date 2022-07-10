@@ -1,0 +1,1 @@
+export const selectCardpacks = state => state.cardpacks;
