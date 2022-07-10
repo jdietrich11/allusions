@@ -46,6 +46,11 @@
 
   .cardpacks {
     padding: 2rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+
     .cardpack {
       height: 20rem;
       width: 10rem;

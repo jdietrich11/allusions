@@ -12,24 +12,34 @@ interface MyCardpackType {
 
 const CardpackSelect: React.FC = () => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
+  const [selectedCardpacks, setSelectedCardpacks] = useState<number[]>([]);
 
   useEffect(() => {
-    const getPacks = async () => {
+    const getPacks = async (data: string) => {
       let res : any = await axios({
         url: 'https://allusiondb.hasura.app/v1/graphql',
         method: 'post',
         headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
         data: {
-          query: 'query MyQuery {cardpack_list { cardpack_name }}'
+          query: `query MyQuery {${data}}`
         }
       })
 
       await setOwnedCardpacks(res.data.data.cardpack_list);
-      console.log(res.data.data.cardpack_list);
     }
 
-    getPacks();
+    let trial = 'cardpack_list { id cardpack_name }'
+
+    getPacks(trial);
   }, [])
+
+  const handleSelectionClick = (id: any) => {
+    if (!selectedCardpacks.includes(id)) {
+      setSelectedCardpacks([...selectedCardpacks, id]);
+    } else {
+      setSelectedCardpacks(selectedCardpacks.filter(data => data !== id))
+    }
+  }
   
   return (
     <div className='cardpack-select'>
@@ -59,9 +69,9 @@ const CardpackSelect: React.FC = () => {
         <div className='cardpacks'>
           {
             ownedCardpacks.map(cardpack => (
-              <div key={cardpack.id} className="cardpack">
-                <div className="selected green">&#10003;</div>
-                <div className="cardpack_name">{cardpack.cardpack_name}</div>
+              <div key={cardpack.id} className="cardpack" onClick={() => handleSelectionClick(cardpack.id)}>
+                <div className={selectedCardpacks.includes(cardpack.id) ? 'selected green' : 'selected'}>&#10003;</div>
+                <div className="cardpack-name">{cardpack.cardpack_name}</div>
               </div>
             ))
           }
@@ -90,29 +100,3 @@ const CardpackSelect: React.FC = () => {
 };
 
 export default CardpackSelect;
-
-/**
-  url: 'https://allusiondb.hasura.app/v1/graphql',
-  method: 'post',
-  headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
-  data: {
-    query: 'query MyQuery {cardpack_list { cardpack_name }}'
-
-                ownedCardpacks.map(cardpack => (
-              <div key={cardpack} className='cardpack'>
-                <div className='selected green'><span>&#10003;</span></div>
-                <div className="cardpack-name">{cardpack}</div>
-              </div>
-            ))
-            // ownedCardpacks.map((cardPack: ['']) => (
-              // <div key={Math.random()}>
-              //   <div className='cardpack' onClick={() => setIsSelected(!selected)}>
-              //     <div className={selected ? 'selected green' : 'selected'}>
-              //       {selected ? <span>&#10003;</span>: ''}
-              //     </div>
-              //     <div className="cardpack-name">{cardPack}</div>
-              //   </div>
-              // </div>
-            // ))
-  }
- */
