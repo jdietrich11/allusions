@@ -6,6 +6,7 @@ import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
 import axios from 'axios';
 import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
+import apiCall from '../../helper/api/api';
 
 interface MyCardpackType {
   id: number;
@@ -19,21 +20,13 @@ const CardpackSelect: React.FC = (props) => {
 
   useEffect(() => {
     const getPacks = async (data: string) => {
-      let res : any = await axios({
-        url: 'https://allusiondb.hasura.app/v1/graphql',
-        method: 'post',
-        headers: {'x-hasura-admin-secret': 'StXrciDZFfqn1mAYf1UxmbTcfLz9uq9doE7p6AAh1293YZcHcwEsXQcVxkI07mgU'},
-        data: {
-          query: `query MyQuery {${data}}`
-        }
-      })
-
-      await setOwnedCardpacks(res.data.data.cardpack_list);
+      let tester = await apiCall(cardpackQuery);
+      const { cardpack_list } = await tester.data;
+      setOwnedCardpacks(cardpack_list);
     }
 
-    let trial = 'cardpack_list { id cardpack_name }'
-
-    getPacks(trial);
+    let cardpackQuery = 'cardpack_list { id cardpack_name }'
+    getPacks(cardpackQuery);
   }, [])
 
   const handleSelectionClick = (id: any) => {
