@@ -16,7 +16,6 @@ const CardpackSelect: React.FC = (props) => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
   const {selectedCardpacks} : any = props;
   const dispatch = useDispatch();
-  console.log(props);
 
   useEffect(() => {
     const getPacks = async (data: string) => {

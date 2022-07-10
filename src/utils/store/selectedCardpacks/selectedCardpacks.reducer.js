@@ -1,7 +1,7 @@
 import { SELECT_CARDPACKS_ACTION_TYPES } from "./selectedCardpacks.types";
 
 const INITIAL_STATE = {
-    selectedCardpacks: []
+    selectedCardpacks: [1]
 }
 
 export const selectedCardpacksReducer = (state = INITIAL_STATE, action) => {
