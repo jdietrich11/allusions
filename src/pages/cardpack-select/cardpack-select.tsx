@@ -6,6 +6,7 @@ import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
 import apiCall from '../../helper/api/api';
 import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
+import { setPlaytime } from '../../utils/store/playtime/playtime.action';
 
 interface MyCardpackType {
   id: number;
@@ -21,6 +22,7 @@ const CardpackSelect: React.FC = (props) => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
   const [tags, setTags] = useState<tagType[]>([]);
   const {selectedCardpacks} : any = props;
+  const { playtime }: any = props; 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,6 +46,10 @@ const CardpackSelect: React.FC = (props) => {
     } else {
       dispatch(removeCardpack(id));
     }
+  }
+
+  const handleChange =(e: any) => {
+    dispatch(setPlaytime(e))
   }
   
   return (
@@ -78,13 +84,13 @@ const CardpackSelect: React.FC = (props) => {
         <div className='button game-length'>
           <label>
             How long do you want to play for?
-            <select defaultValue={'normal'}>
-              <option value='quick'>quick (30 cards: 30 minutes)</option>
-              <option value='short'>short (40 cards: 45 minutes)</option>
-              <option value='normal'>
+            <select value={playtime} onChange={(e) => handleChange(e.target.value)} defaultValue={'normal'}>
+              <option value='30'>quick (30 cards: 30 minutes)</option>
+              <option value='45'>short (40 cards: 45 minutes)</option>
+              <option value='60'>
                 normal (50 cards: 60 minutes)
               </option>
-              <option value='short'>long (60 cards: 75 minutes)</option>
+              <option value='75'>long (60 cards: 75 minutes)</option>
             </select>
           </label>
         </div>
@@ -98,7 +104,8 @@ const CardpackSelect: React.FC = (props) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    selectedCardpacks: state.selectedCardpacks.selectedCardpacks
+    selectedCardpacks: state.selectedCardpacks.selectedCardpacks,
+    playtime: state.playtime.playtime,
   };
 };
 
