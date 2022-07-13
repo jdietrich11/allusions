@@ -4,28 +4,37 @@ import { useDispatch, connect } from 'react-redux';
 
 import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
-import axios from 'axios';
-import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
 import apiCall from '../../helper/api/api';
+import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
 
 interface MyCardpackType {
   id: number;
   cardpack_name: string;
 }
 
+interface tagType {
+  id: number;
+  tag_name: string;
+}
+
 const CardpackSelect: React.FC = (props) => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
+  const [tags, setTags] = useState<tagType[]>([]);
   const {selectedCardpacks} : any = props;
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getPacks = async (data: string) => {
-      let tester = await apiCall(cardpackQuery);
-      const { cardpack_list } = await tester.data;
+      let cardPack = await apiCall(cardpackQuery);
+      let tags = await apiCall(tagQuery);
+      const { cardpack_list } = await cardPack.data;
+      const { tag } = await tags.data;
       setOwnedCardpacks(cardpack_list);
+      setTags(tag);
     }
 
-    let cardpackQuery = 'cardpack_list { id cardpack_name }'
+    let cardpackQuery = 'cardpack_list { id cardpack_name }';
+    let tagQuery = 'tag (order_by: {tag_name: asc}, distinct_on: tag_name) { id tag_name }'
     getPacks(cardpackQuery);
   }, [])
 
@@ -44,22 +53,14 @@ const CardpackSelect: React.FC = (props) => {
         <div className='filter'>
           <div className='title'>filter</div>
           <form className='form'>
-            <label className='label'>
-              <input className='input' type='checkbox' />
-              History
-            </label>
-            <label className='label'>
-              <input className='input' type='checkbox' />
-              Art
-            </label>
-            <label className='label'>
-              <input className='input' type='checkbox' />
-              Languages
-            </label>
-            <label className='label'>
-              <input className='input' type='checkbox' />
-              Superheros
-            </label>
+            {
+              tags.map(tag => (
+                <label key={tag.id} className='label'>
+                  <input type="checkbox" className='input' />
+                  {tag.tag_name}
+                </label>
+              ))
+            }
           </form>
         </div>
         <div className='cardpacks'>

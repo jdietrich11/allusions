@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
@@ -17,15 +17,6 @@ const SignInForm: React.FC = (props) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   const navigate = useNavigate();
-  const { currentUser }: any = props;
-
-  useEffect(() => {
-    if (currentUser !== null) {
-      return;
-    } else {
-      navigate('/choose-teams');
-    }
-  }, []);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -46,8 +37,6 @@ const SignInForm: React.FC = (props) => {
         email,
         password
       );
-
-      console.log(user);
 
       dispatch(setCurrentUser(user));
 
