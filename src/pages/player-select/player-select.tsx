@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './player-select.styles.scss';
 
@@ -20,4 +21,10 @@ const PlayerSelect: React.FC = () => {
   );
 };
 
-export default PlayerSelect;
+const mapStateToProps = (state: any) => {
+  return {
+    team1: state.teams.team1,
+    team2: state.teams.team2,
+  };
+};
+export default connect(mapStateToProps)(PlayerSelect);

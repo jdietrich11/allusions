@@ -10,9 +10,9 @@ export const teamsReducer = (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case USER_ACTION_TYPES.ADD_USER_TO_TEAM1:
-      return { ...state, team1: [...state.team1, payload] };
+      return { ...state, team1: [...state.team1, {player : payload, score: 0 }] };
     case USER_ACTION_TYPES.ADD_USER_TO_TEAM2:
-      return { ...state, team2: [...state.team2, payload] };
+      return { ...state, team2: [...state.team2, {player : payload, score: 0 }] };
     case USER_ACTION_TYPES.REMOVE_USER_FROM_TEAM1:
       return {
         ...state,

@@ -16,8 +16,6 @@ const ChooseTeams: React.FC = (props) => {
   const dispatch = useDispatch();
   const [placeholder, setPlaceHolder] = useState('');
   const [placeholder2, setPlaceHolder2] = useState('');
-  addUserToTeam1('josh');
-
   const { team1, team2 }: any = props;
 
   return (
@@ -30,8 +28,8 @@ const ChooseTeams: React.FC = (props) => {
             <div></div>
           ) : (
             team1.map((teamMember: any) => (
-              <div className='player' key={teamMember + 1}>
-                {teamMember}
+              <div className='player' key={teamMember.player + 1}>
+                {teamMember.player}
                 <div
                   className='x'
                   onClick={(e) => {
@@ -61,16 +59,16 @@ const ChooseTeams: React.FC = (props) => {
         <div className='team'>
           <div className='team2'>Team 2</div>
           {!team2 ? (
-            <></>
+            <div></div>
           ) : (
             team2.map((teamMember: any) => (
-              <div className='player' key={teamMember}>
-                {teamMember}
+              <div className='player' key={teamMember.player + 1}>
+                {teamMember.player}
                 <div
                   className='x'
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(removeUserFromTeam2(teamMember));
+                    dispatch(removeUserFromTeam2(teamMember.player));
                   }}
                 >
                   x

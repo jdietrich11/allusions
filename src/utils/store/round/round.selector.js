@@ -1,1 +1,1 @@
-export const selectRound = state => state.round;
+export const selectRound = (state) => state.round;
