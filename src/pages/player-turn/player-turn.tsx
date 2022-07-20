@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+
+import { drawCard } from '../../utils/store/deck/deck.action';
 
 import './player-turn.styles.scss';
 
-const PlayerTurn: React.FC = () => {
+const PlayerTurn: React.FC = (props) => {
+  const {deck}: any = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
+  const [activeCard, setActiveCard] = useState();
+  console.log(deck);
   
   useEffect(() => {
-    const tickTimer = () => {
-      if (timer > 0) {
-        setTimeout(() => {
-          setTimer(timer - 1);
-        }, 1000);
-        console.log(timer);
-      }
-      if (timer === 0) {
-        navigate('/scores');
-        console.log('Timer Done');
-      }
-    }
-    tickTimer();
+    // const tickTimer = () => {
+    //   if (timer > 0) {
+    //     setTimeout(() => {
+    //       setTimer(timer - 1);
+    //     }, 1000);
+    //     console.log(timer);
+    //   }
+    //   if (timer === 0) {
+    //     navigate('/scores');
+    //     console.log('Timer Done');
+    //   }
+    // }
+    // tickTimer();
+    dispatch(drawCard());
+
   }, [timer, setTimer]);
 
   return (
@@ -53,6 +61,7 @@ const mapStateToProps = (state: any) => {
   return {
     activePlayer: state.activePlayer.activePlayer,
     turnCounter: state.turnCounter.turnCounter,
+    deck: state.deck.deck,
   };
 };
 
