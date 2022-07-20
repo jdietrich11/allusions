@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
-import { drawCard } from '../../utils/store/deck/deck.action';
+import { drawCard, discardCard } from '../../utils/store/deck/deck.action';
 
 import './player-turn.styles.scss';
 
 const PlayerTurn: React.FC = (props) => {
-  const {deck}: any = props;
+  const {deck, activeCard}: any = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
-  const [activeCard, setActiveCard] = useState();
   console.log(deck);
   
   useEffect(() => {
@@ -32,26 +31,29 @@ const PlayerTurn: React.FC = (props) => {
 
   }, [timer, setTimer]);
 
+  const handleWrongClick = () => {console.log('wrong')};
+
+  const handleRightClick = (card: any) => {
+    dispatch(discardCard(card));
+    dispatch(drawCard());
+  };
+
   return (
     <div className='player-turn'>
       <div className='timer'>{timer}</div>
       <div className='card'>
-        <img className='image' src='#' alt='julius caesar' />
+        <img className='image' src='#' alt={activeCard.card_name} />
         <div className='info'>
-          <div className='name'>Julius Caesar</div>
+          <div className='name'>{activeCard.card_name}</div>
           <div className='description'>
-            Gaius Julius Caesar was a Roman general and statesman. A member of
-            the First Triumvirate, Caesar led the Roman armies in the Gallic
-            Wars before defeating his political rival Pompey in a civil war, and
-            subsequently became dictator of Rome from 49 BC until his
-            assassination in 44 BC.
+            {activeCard.card_hint}
           </div>
         </div>
-        <div className='point-value'>1</div>
+        <div className='point-value'>{activeCard.point_value}</div>
       </div>
       <div className='buttons'>
-        <div className='wrong button'>x</div>
-        <div className='right button'>&#10003;</div>
+        <div onClick={() => handleWrongClick()} className='wrong button'>x</div>
+        <div onClick={() => handleRightClick(activeCard)} className='right button'>&#10003;</div>
       </div>
     </div>
   );
@@ -62,6 +64,7 @@ const mapStateToProps = (state: any) => {
     activePlayer: state.activePlayer.activePlayer,
     turnCounter: state.turnCounter.turnCounter,
     deck: state.deck.deck,
+    activeCard: state.deck.activeCard,
   };
 };
 

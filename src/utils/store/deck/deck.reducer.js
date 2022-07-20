@@ -17,8 +17,9 @@ export const deckReducer = (state = INITIAL_STATE, action) => {
         case SET_DECK.RESET_DECK:
             return {...state, deck: [], activeCard: [], discardPile: []};
         case SET_DECK.DRAW_CARD:
-            let index = () => Math.floor(Math.random * state.deck.length);
-            return {...state, activeCard: state.deck[index]};
+            return {...state, activeCard: state.deck[0]};
+        case SET_DECK.DISCARD_CARD:
+            return {...state, discardPile: [...state.discardPile, payload], deck: state.deck.filter(deck => deck !== payload)}
         default:
             return state;
     }
