@@ -64,4 +64,5 @@ const mapStateToProps = (state: any) => {
     turnCounter: state.turnCounter.turnCounter,
   };
 };
+
 export default connect(mapStateToProps)(PlayerSelect);

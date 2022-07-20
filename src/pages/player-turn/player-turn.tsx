@@ -1,20 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './player-turn.styles.scss';
 
 const PlayerTurn: React.FC = () => {
   const navigate = useNavigate();
-
+  const [timer, setTimer] = useState(60);
+  
   useEffect(() => {
-    setTimeout(() => {
-      navigate('/scores');
-    }, 30000);
-  }, []);
+    const tickTimer = () => {
+      if (timer > 0) {
+        setTimeout(() => {
+          setTimer(timer - 1);
+        }, 1000);
+        console.log(timer);
+      }
+      if (timer === 0) {
+        navigate('/scores');
+        console.log('Timer Done');
+      }
+    }
+    tickTimer();
+  }, [timer, setTimer]);
 
   return (
     <div className='player-turn'>
-      <div className='timer'>//clock//</div>
+      <div className='timer'>{timer}</div>
       <div className='card'>
         <img className='image' src='#' alt='julius caesar' />
         <div className='info'>
@@ -37,4 +49,11 @@ const PlayerTurn: React.FC = () => {
   );
 };
 
-export default PlayerTurn;
+const mapStateToProps = (state: any) => {
+  return {
+    activePlayer: state.activePlayer.activePlayer,
+    turnCounter: state.turnCounter.turnCounter,
+  };
+};
+
+export default connect(mapStateToProps)(PlayerTurn);

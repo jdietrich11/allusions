@@ -1,0 +1,1 @@
+export const deckSelector = state => state.deck;
