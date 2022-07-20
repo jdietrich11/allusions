@@ -9,7 +9,7 @@ export const deckReducer = (state = INITIAL_STATE, action) => {
 
     switch(type) {
         case SET_DECK.SET_DECK:
-            return {...state, deck: {...state.deck, payload}}
+            return {...state, deck: [...state.deck, payload]}
         default:
             return state;
     }
