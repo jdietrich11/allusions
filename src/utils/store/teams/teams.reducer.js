@@ -23,6 +23,16 @@ export const teamsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         team2: [...state.team2.filter((teamMember) => teamMember !== payload)],
       };
+    case USER_ACTION_TYPES.TEAM1_CORRECT:
+        return {
+          ...state,
+          team1: [...state.team1, {player: payload.player, score: payload.score}]
+        }
+    case USER_ACTION_TYPES.TEAM2_CORRECT:
+      return {
+        ...state,
+        team2: [...state.team2, {player: payload.player, score: payload.score}]
+      }
     default:
       return state;
   }

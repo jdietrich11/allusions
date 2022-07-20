@@ -7,7 +7,7 @@ import { drawCard, discardCard } from '../../utils/store/deck/deck.action';
 import './player-turn.styles.scss';
 
 const PlayerTurn: React.FC = (props) => {
-  const {deck, activeCard}: any = props;
+  const {deck, activeCard, team1, team2, activePlayer}: any = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
@@ -34,6 +34,12 @@ const PlayerTurn: React.FC = (props) => {
   const handleWrongClick = () => {console.log('wrong')};
 
   const handleRightClick = (card: any) => {
+    if (deck.length <1) {
+      navigate('/cardpack-select');
+    }
+    let i = team1.indexOf(activePlayer);
+    console.log(activePlayer);
+    console.log(i);
     dispatch(discardCard(card));
     dispatch(drawCard());
   };
@@ -61,6 +67,8 @@ const PlayerTurn: React.FC = (props) => {
 
 const mapStateToProps = (state: any) => {
   return {
+    team1: state.teams.team1,
+    team2: state.teams.team2,
     activePlayer: state.activePlayer.activePlayer,
     turnCounter: state.turnCounter.turnCounter,
     deck: state.deck.deck,

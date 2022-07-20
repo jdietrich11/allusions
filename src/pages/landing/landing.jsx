@@ -5,12 +5,14 @@ import { useDispatch } from 'react-redux';
 import './landing.styles.scss';
 import video from '../../assets/nebula.mp4';
 import { resetDeck } from '../../utils/store/deck/deck.action';
+import { resetActivePlayer } from '../../utils/store/activePlayer/activeplayer.action';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
     dispatch(resetDeck());
+    dispatch(resetActivePlayer());
   }
   
   return (

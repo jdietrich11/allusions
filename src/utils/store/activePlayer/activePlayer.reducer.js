@@ -9,7 +9,9 @@ export const activePlayerReducer = (state = INITIAL_STATE, action) => {
 
     switch(type) {
         case SET_ACTIVE_PLAYER.SET_ACTIVE_PLAYER:
-            return {...state, activePlayer: payload }
+            return {...state, activePlayer: payload };
+        case SET_ACTIVE_PLAYER.RESET_ACTIVE_PLAYER: 
+            return {...state, activePlayer: undefined};
         default:
             return state;
     }
