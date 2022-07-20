@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
 import './instructions.styles.scss';
+import shuffle from '../../helper/shuffleDeck/shuffleDeck';
 import { setRound } from '../../utils/store/round/round.action';
+import { shuffleDeck } from '../../utils/store/deck/deck.action';
 
 const Instructions: React.FC = (props) => {
-  let { round }: any = props;
+  let { round, deck }: any = props;
   const dispatch = useDispatch();
+
+  useEffect(() => {  
+    let newDeck = shuffle(deck);
+    dispatch(shuffleDeck(newDeck));
+  }, [])
+  
 
   const setRules = (round : number) => {
     if (round === 1) {
@@ -39,6 +47,7 @@ const Instructions: React.FC = (props) => {
 const mapStateToProps = (state : any) => {
   return {
     round: state.round.round,
+    deck: state.deck.deck,
   }
 }
 
