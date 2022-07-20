@@ -7,7 +7,7 @@ import { rootReducer } from './root-reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['selectedCardpacks', 'round', 'playtime'],
+  blacklist: ['selectedCardpacks', 'round', 'playtime', 'deck'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

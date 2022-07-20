@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import './cardpack-select.styles.scss';
 import Header from '../../components/header/header';
 import apiCall from '../../helper/api/api';
 import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
 import { setPlaytime } from '../../utils/store/playtime/playtime.action';
+import { setDeck } from '../../utils/store/deck/deck.action';
 
 interface MyCardpackType {
   id: number;
@@ -21,9 +22,9 @@ interface tagType {
 const CardpackSelect: React.FC = (props) => {
   const [ownedCardpacks, setOwnedCardpacks] = useState<MyCardpackType[]>([]);
   const [tags, setTags] = useState<tagType[]>([]);
-  const {selectedCardpacks} : any = props;
-  const { playtime }: any = props; 
+  const {selectedCardpacks, playtime} : any = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPacks = async (data: string) => {
@@ -49,7 +50,15 @@ const CardpackSelect: React.FC = (props) => {
   }
 
   const handleChange =(e: any) => {
-    dispatch(setPlaytime(e))
+    dispatch(setPlaytime(e * 1))
+  }
+
+  const submitDeck = async () => {
+    console.log('click');
+    let cardsQuery = `card (where: {cardpack_id : {_eq: 1}}) { id card_name card_hint point_value}`;
+    let cards = await apiCall(cardsQuery);
+    let { card } = await cards.data;
+    console.log(card);
   }
   
   return (
@@ -94,9 +103,9 @@ const CardpackSelect: React.FC = (props) => {
             </select>
           </label>
         </div>
-        <Link to={'/instructions'} className='shuffle button'>
+        <div onClick={() => submitDeck()} className='shuffle button'>
           Shuffle up and go
-        </Link>
+        </div>
       </div>
     </div>
   );

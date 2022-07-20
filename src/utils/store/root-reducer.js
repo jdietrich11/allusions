@@ -7,6 +7,7 @@ import { playtimeReducer } from './playtime/playtime.reducer';
 import { roundReducer } from './round/round.reducer';
 import { activePlayerReducer } from './activePlayer/activePlayer.reducer';
 import { turnCounterReducer } from './turnCounter/turnCounter.reducer';
+import { deckReducer } from './deck/deck.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
@@ -16,4 +17,5 @@ export const rootReducer = combineReducers({
   round: roundReducer,
   activePlayer: activePlayerReducer,
   turnCounter: turnCounterReducer,
+  deck: deckReducer,
 });

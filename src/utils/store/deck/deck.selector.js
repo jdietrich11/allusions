@@ -1,1 +1,1 @@
-export const deckSelector = state => state.deck;
+export const selectDeck = state => state.deck;
