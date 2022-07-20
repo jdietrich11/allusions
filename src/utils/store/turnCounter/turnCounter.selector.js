@@ -1,0 +1,1 @@
+export const turnCounterSelector = state => state.turnCounterSelector;

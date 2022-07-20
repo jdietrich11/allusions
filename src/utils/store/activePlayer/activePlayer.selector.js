@@ -1,0 +1,1 @@
+export const selectActivePlayer = state => state.activePlayer;

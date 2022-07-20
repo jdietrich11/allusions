@@ -5,6 +5,8 @@ import { teamsReducer } from './teams/teams.reducer';
 import { selectedCardpacksReducer } from './selectedCardpacks/selectedCardpacks.reducer';
 import { playtimeReducer } from './playtime/playtime.reducer';
 import { roundReducer } from './round/round.reducer';
+import { activePlayerReducer } from './activePlayer/activePlayer.reducer';
+import { turnCounterReducer } from './turnCounter/turnCounter.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
@@ -12,4 +14,6 @@ export const rootReducer = combineReducers({
   selectedCardpacks: selectedCardpacksReducer,
   playtime: playtimeReducer,
   round: roundReducer,
+  activePlayer: activePlayerReducer,
+  turnCounter: turnCounterReducer,
 });
