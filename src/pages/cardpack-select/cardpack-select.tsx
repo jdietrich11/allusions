@@ -7,7 +7,6 @@ import Header from '../../components/header/header';
 import apiCall from '../../helper/api/api';
 import { addCardpack, removeCardpack } from '../../utils/store/selectedCardpacks/selectedCardpacks.action';
 import { setPlaytime } from '../../utils/store/playtime/playtime.action';
-import { setDeck } from '../../utils/store/deck/deck.action';
 
 
 interface MyCardpackType {
@@ -55,15 +54,7 @@ const CardpackSelect: React.FC = (props) => {
   }
 
   const submitDeck = async () => {
-    for (let j = 0; j < selectedCardpacks.length; j++) {
-      let cardsQuery = `card (where: {cardpack_id : {_eq: ${selectedCardpacks[j]}}}) { id card_name card_hint point_value}`;
-      let cards = await apiCall(cardsQuery);
-      let { card } = await cards.data;
-      for (let i = 0; i < card.length; i++) {
-        dispatch(setDeck(card[i]));
-      }
       navigate('/instructions');
-    }
   }
   
   return (

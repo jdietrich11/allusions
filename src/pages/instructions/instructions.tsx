@@ -7,12 +7,28 @@ import shuffle from '../../helper/shuffleDeck/shuffleDeck';
 import { setRound } from '../../utils/store/round/round.action';
 import { increaseTurnCounter } from '../../utils/store/turnCounter/turnCounter.action';
 import { shuffleDeck } from '../../utils/store/deck/deck.action';
+import apiCall from '../../helper/api/api';
+import { setDeck } from '../../utils/store/deck/deck.action';
+import { resetDeck } from '../../utils/store/deck/deck.action';
 
 const Instructions: React.FC = (props) => {
-  let { round, deck }: any = props;
+  let { round, deck, selectedCardpacks }: any = props;
+  console.log(selectedCardpacks);
   const dispatch = useDispatch();
 
-  useEffect(() => {  
+  useEffect(() => {
+    dispatch(resetDeck());
+    let getDeck = async () => {
+      for (let j = 0; j < selectedCardpacks.length; j++) {
+        let cardsQuery = `card (where: {cardpack_id : {_eq: ${selectedCardpacks[j]}}}) { id card_name card_hint point_value}`;
+        let cards = await apiCall(cardsQuery);
+        let { card } = await cards.data;
+        for (let i = 0; i < card.length; i++) {
+          dispatch(setDeck(card[i]));
+        }
+      }  
+    }
+    getDeck();
     let newDeck = shuffle(deck);
     dispatch(shuffleDeck(newDeck));
     dispatch(increaseTurnCounter(0));
@@ -50,6 +66,7 @@ const mapStateToProps = (state : any) => {
   return {
     round: state.round.round,
     deck: state.deck.deck,
+    selectedCardpacks: state.selectedCardpacks.selectedCardpacks,
   }
 }
 

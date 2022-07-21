@@ -20,6 +20,7 @@ export const deckReducer = (state = INITIAL_STATE, action) => {
             return {...state, activeCard: state.deck[0]};
         case SET_DECK.DISCARD_CARD:
             return {...state, discardPile: [...state.discardPile, payload], deck: state.deck.filter(deck => deck !== payload)}
+
         default:
             return state;
     }

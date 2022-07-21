@@ -18,20 +18,21 @@ const PlayerTurn: React.FC = (props) => {
       if (timer > 0) {
         setTimeout(() => {
           setTimer(timer - 1);
-        }, 1000);
+        }, 100);
       }
       if (timer === 0) {
-        dispatch(setRound(round + 1))
-        if (round <= 3) {
+        if (round < 3) {
           console.log('run <= 3')
-          if (turnCounter > team1.length && turnCounter > team2.length) {
+          if (deck.length < 1) {
+            dispatch(setRound(round + 1))
             navigate('/instructions');
           }
-          if (turnCounter < team1.length || turnCounter < team2.length) {
+          if (deck.length > 0) {
+            console.log('eh' + deck.length);
             navigate('/player-select');
           }
         }
-        if (round > 3) {
+        if (round >= 3) {
           console.log('run > 3');
           navigate('/scores');
         }
@@ -43,7 +44,7 @@ const PlayerTurn: React.FC = (props) => {
 
   }, [timer, setTimer]);
 
-  const handleWrongClick = (card:any) => {        
+  const handleWrongClick = (card:any) => {    
     dispatch(discardCard(card));
     dispatch(drawCard());
   };
@@ -73,14 +74,14 @@ const PlayerTurn: React.FC = (props) => {
     <div className='player-turn'>
       <div className='timer'>{timer}</div>
       <div className='card'>
-        <img className='image' src='#' alt={activeCard.card_name} />
+        <img className='image' src='#' alt={activeCard ? activeCard.card_name : ''} />
         <div className='info'>
-          <div className='name'>{activeCard.card_name}</div>
+          <div className='name'>{activeCard ? activeCard.card_name : ''}</div>
           <div className='description'>
-            {activeCard.card_hint}
+            {activeCard ? activeCard.card_hint : ''}
           </div>
         </div>
-        <div className='point-value'>{activeCard.point_value}</div>
+        <div className='point-value'>{activeCard ? activeCard.point_value : ''}</div>
       </div>
       <div className='buttons'>
         <div onClick={() => handleWrongClick(activeCard)} className='wrong button'>x</div>
