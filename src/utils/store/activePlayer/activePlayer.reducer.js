@@ -12,6 +12,8 @@ export const activePlayerReducer = (state = INITIAL_STATE, action) => {
             return {...state, activePlayer: payload };
         case SET_ACTIVE_PLAYER.RESET_ACTIVE_PLAYER: 
             return {...state, activePlayer: undefined};
+        case SET_ACTIVE_PLAYER.INCREASE_ACTIVE_SCORE:
+            return {...state, activePlayer: {player: state.activePlayer.player, score: payload}}
         default:
             return state;
     }

@@ -1,4 +1,6 @@
+/* eslint-disable no-dupe-keys */
 import { USER_ACTION_TYPES } from './teams.types';
+import update from 'react-addons-update';
 
 const INITIAL_STATE = {
   team1: [],
@@ -24,14 +26,19 @@ export const teamsReducer = (state = INITIAL_STATE, action) => {
         team2: [...state.team2.filter((teamMember) => teamMember !== payload)],
       };
     case USER_ACTION_TYPES.TEAM1_CORRECT:
-        return {
-          ...state,
-          team1: [...state.team1, {player: payload.player, score: payload.score}]
-        }
+      let i = payload[0];
+      console.log(payload);
+        return state;
     case USER_ACTION_TYPES.TEAM2_CORRECT:
       return {
         ...state,
         team2: [...state.team2, {player: payload.player, score: payload.score}]
+      }
+    case USER_ACTION_TYPES.RESET_TEAMS:
+      return {
+        ...state,
+        team1: [],
+        team2: [],
       }
     default:
       return state;

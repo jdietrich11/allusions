@@ -12,7 +12,12 @@ export const removeUserFromTeam1 = (user) =>
 
 export const removeUserFromTeam2 = (user) =>
   createAction(USER_ACTION_TYPES.REMOVE_USER_FROM_TEAM2, user);
-export const correctGuessTeam1 = (player, score) =>
-  createAction(USER_ACTION_TYPES.TEAM1_CORRECT, (player, score));
-export const correctGuesTeam2 = (player, score) =>
-  createAction(USER_ACTION_TYPES.TEAM2_CORRECT, player, score);
+export const correctGuessTeam1 = (index, player, score) =>
+  createAction(USER_ACTION_TYPES.TEAM1_CORRECT, [index, player, score]);
+export const correctGuessTeam2 = (player, score) =>
+  createAction(USER_ACTION_TYPES.TEAM2_CORRECT, (player, score));
+export const resetTeams = () => createAction(USER_ACTION_TYPES.RESET_TEAMS)
+
+
+
+

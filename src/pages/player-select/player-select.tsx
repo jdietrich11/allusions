@@ -15,23 +15,19 @@ const PlayerSelect: React.FC = (props: any) => {
     console.log(activePlayer);
     if (!activePlayer) {
       dispatch(setActivePlayer(team1[0]));
-      console.log('run');
     }
     if (team1.indexOf(activePlayer) !== -1) {
       let index = team1.indexOf(activePlayer);
       dispatch(setActivePlayer(team2[turnCounter]))
-      console.log('run 1');
     } 
     if (team2.indexOf(activePlayer) !== -1) {
       let index = team2.indexOf(activePlayer);
       dispatch(increaseTurnCounter(turnCounter + 1));
       dispatch(setActivePlayer(team1[turnCounter]));
-      console.log('run 2');
   
     }
     if (team1.indexOf(activePlayer) === -1 && team2.indexOf(activePlayer) === -1) {
       dispatch(increaseTurnCounter(0));
-      console.log('run 3')
     }
     
     return () => {
