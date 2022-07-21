@@ -3,30 +3,42 @@ import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
 import { drawCard, discardCard } from '../../utils/store/deck/deck.action';
-import { correctGuessTeam1, correctGuessTeam2 } from '../../utils/store/teams/teams.action';
+import { setRound } from '../../utils/store/round/round.action';
 import { increaseActiveScore } from '../../utils/store/activePlayer/activeplayer.action';
 import './player-turn.styles.scss';
 
 const PlayerTurn: React.FC = (props) => {
-  const {deck, activeCard, team1, team2, activePlayer, round}: any = props;
+  const {deck, activeCard, team1, team2, activePlayer, round, turnCounter}: any = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
 
   useEffect(() => {
-    // const tickTimer = () => {
-    //   if (timer > 0) {
-    //     setTimeout(() => {
-    //       setTimer(timer - 1);
-    //     }, 1000);
-    //     console.log(timer);
-    //   }
-    //   if (timer === 0) {
-    //     navigate('/scores');
-    //     console.log('Timer Done');
-    //   }
-    // }
-    // tickTimer();
+    const tickTimer = () => {
+      if (timer > 0) {
+        setTimeout(() => {
+          setTimer(timer - 1);
+        }, 1000);
+      }
+      if (timer === 0) {
+        dispatch(setRound(round + 1))
+        if (round <= 3) {
+          console.log('run <= 3')
+          if (turnCounter > team1.length && turnCounter > team2.length) {
+            navigate('/instructions');
+          }
+          if (turnCounter < team1.length || turnCounter < team2.length) {
+            navigate('/player-select');
+          }
+        }
+        if (round > 3) {
+          console.log('run > 3');
+          navigate('/scores');
+        }
+        console.log('Timer Done');
+      }
+    }
+    tickTimer();
     dispatch(drawCard());
 
   }, [timer, setTimer]);
@@ -37,25 +49,24 @@ const PlayerTurn: React.FC = (props) => {
   };
 
   const handleRightClick = (card: any) => {
-    console.log(team1.indexOf(activePlayer));
-    console.log(team2.indexOf(activePlayer));
     let score = activePlayer.score + (activeCard.point_value * round);
-
-      if (team1.indexOf(activePlayer) >= 0) {
-        let i = team1.indexOf(activePlayer);
-        dispatch(correctGuessTeam1(i, activePlayer.player, score))
+    for ( let i = 0; i < team1.length; i++) {
+      if (team1[i].player === activePlayer.player) {
+        team1[i].score = score;
         dispatch(increaseActiveScore(score));
-        console.log('run2');
-        dispatch(discardCard(card));
-        dispatch(drawCard());
-      }
-      if (team2.indexOf(activePlayer) >= 0) {
-        let j = team2.indexOf(activePlayer);
-        console.log('run3');
-      if ((team1.indexOf(activePlayer) < 0) && (team2.indexOf(activePlayer) < 0)) {
-        console.log('fuck this stupdi game');
+        console.log('FuckingTRash');
       }
     }
+    for ( let j = 0; j <team2.length; j++) {
+      if (team2[j].player === activePlayer.player) {
+        team2[j].score = score;
+        dispatch(increaseActiveScore(score));
+        console.log('IHATE YOU')
+      }
+    }
+    dispatch(discardCard(card));
+    dispatch(drawCard());
+    
   };
 
   return (

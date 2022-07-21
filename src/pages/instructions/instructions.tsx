@@ -5,6 +5,7 @@ import { connect, useDispatch } from 'react-redux';
 import './instructions.styles.scss';
 import shuffle from '../../helper/shuffleDeck/shuffleDeck';
 import { setRound } from '../../utils/store/round/round.action';
+import { increaseTurnCounter } from '../../utils/store/turnCounter/turnCounter.action';
 import { shuffleDeck } from '../../utils/store/deck/deck.action';
 
 const Instructions: React.FC = (props) => {
@@ -14,6 +15,7 @@ const Instructions: React.FC = (props) => {
   useEffect(() => {  
     let newDeck = shuffle(deck);
     dispatch(shuffleDeck(newDeck));
+    dispatch(increaseTurnCounter(0));
   }, [])
   
 

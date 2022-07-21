@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
 import { setActivePlayer } from '../../utils/store/activePlayer/activeplayer.action';
@@ -9,6 +9,7 @@ import './player-select.styles.scss';
 
 const PlayerSelect: React.FC = (props: any) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { team1, team2, activePlayer, turnCounter } = props;
 
   useEffect(() => {
@@ -16,21 +17,18 @@ const PlayerSelect: React.FC = (props: any) => {
     if (!activePlayer) {
       dispatch(setActivePlayer(team1[0]));
     }
-    if (team1.indexOf(activePlayer) !== -1) {
-      let index = team1.indexOf(activePlayer);
-      dispatch(setActivePlayer(team2[turnCounter]))
-    } 
-    if (team2.indexOf(activePlayer) !== -1) {
-      let index = team2.indexOf(activePlayer);
-      dispatch(increaseTurnCounter(turnCounter + 1));
-      dispatch(setActivePlayer(team1[turnCounter]));
-  
-    }
-    if (team1.indexOf(activePlayer) === -1 && team2.indexOf(activePlayer) === -1) {
-      dispatch(increaseTurnCounter(0));
-    }
-    
-    return () => {
+    else {
+      for ( let i = 0; i < team1.length; i++) {
+        if (team1[i].player === activePlayer.player) {
+          dispatch(setActivePlayer(team2[turnCounter]));
+        }
+      }
+      for (let j = 0; j < team2.length; j++) {
+        if (team2[j].player === activePlayer.player) {
+          dispatch(increaseTurnCounter(turnCounter + 1));
+          dispatch(setActivePlayer(team1[turnCounter]));
+        }
+      }
     }
   }, [])
   
